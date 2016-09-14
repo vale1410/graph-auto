@@ -1,2 +1,53 @@
 # graph-auto
 A quick hack to test graph automorphism using ASP/SAT
+
+A model in ASP that would be equivalent to a SAT model, so clasp should be similar to a normal SAT solver. 
+
+
+Tested on instances from http://funkybee.narod.ru/graphs.htm
+
+
+Here the results. 
+
+```
+for x in tests/*; do echo $(basename $x .graph) $(gringo3 model.lp $x | clasp --configuration=crafty -t 4 | grep 'SATIS\|CPU'); done  
+t01 SATISFIABLE CPU Time : 0.010s
+t02 SATISFIABLE CPU Time : 0.020s
+t03 SATISFIABLE CPU Time : 0.090s
+t04 SATISFIABLE CPU Time : 0.120s
+t05 SATISFIABLE CPU Time : 0.340s
+t06 UNSATISFIABLE CPU Time : 0.190s
+t07 UNSATISFIABLE CPU Time : 0.070s
+t08 UNSATISFIABLE CPU Time : 0.790s
+t09 UNSATISFIABLE CPU Time : 9.960s
+t10 UNSATISFIABLE CPU Time : 0.010s
+t11 UNSATISFIABLE CPU Time : 4.100s
+t12 UNSATISFIABLE CPU Time : 0.830s
+t13 UNSATISFIABLE CPU Time : 125.310s
+t14 UNSATISFIABLE CPU Time : 33.790s
+t15 UNSATISFIABLE CPU Time : 4.230s
+t16 UNSATISFIABLE CPU Time : 9.780s
+t17 UNSATISFIABLE CPU Time : 9.450s
+t18 UNSATISFIABLE CPU Time : 9.180s
+t19 UNSATISFIABLE CPU Time : 9.090s
+t20 UNSATISFIABLE CPU Time : 0.040s
+t21 UNSATISFIABLE CPU Time : 2.270s
+t22 UNSATISFIABLE CPU Time : 1.780s
+t23 UNSATISFIABLE CPU Time : 1.870s
+t24 UNSATISFIABLE CPU Time : 0.420s
+t25 UNSATISFIABLE CPU Time : 0.040s
+t26 UNSATISFIABLE CPU Time : 5.340s
+t27 UNSATISFIABLE CPU Time : 5.250s
+t28 UNSATISFIABLE CPU Time : 5.220s
+t29 UNSATISFIABLE CPU Time : 0.040s
+t30 UNSATISFIABLE CPU Time : 0.030s
+t31 UNSATISFIABLE CPU Time : 0.000s
+t32 UNSATISFIABLE CPU Time : 2.770s
+t33 SATISFIABLE CPU Time : 0.020s
+t34 UNSATISFIABLE CPU Time : 1.170s
+t35 SATISFIABLE CPU Time : 1.100s
+t36 SATISFIABLE CPU Time : 1.020s
+t37 UNSATISFIABLE CPU Time : 0.190s
+t38 UNSATISFIABLE CPU Time : 0.000s
+t39 UNSATISFIABLE CPU Time : 0.000s
+```
