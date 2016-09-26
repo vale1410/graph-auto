@@ -1,5 +1,5 @@
-%#hide. 
-%#show map/2. 
+#hide. 
+#show map/2. 
 
 node(G,X) :- edge(G,X,_).
 node(G,X) :- edge(G,_,X).
