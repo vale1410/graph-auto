@@ -3,13 +3,19 @@ A quick hack to test graph automorphism using ASP/SAT
 
 A model in ASP that would be equivalent to a SAT model, so clasp should be similar to a normal SAT solver. 
 
-If gringo and clasp are installed in the path you can run instances by : 
 
 
 ```
 ./graph-iso-asp.sh <graph1> <graph2> <timelimit in seconds>
 
 ```
+
+Prerequisites: 
+--
+
+* Gringo(version 3.) and Clasp  from http://potassco.sourceforge.net/ 
+* zsh, gcc, golang compiler (https://golang.org/dl/). 
+* compile both convert.go and graph.c/h 
 
 Example
 ---
