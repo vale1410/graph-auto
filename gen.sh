@@ -1,4 +1,4 @@
-
+#!/bin/zsh
 
 ls CHH/B/CHH_cc\(*  | sed 's/.*_.*_//g' | sed 's/\..*//g' | uniq | while read size ; 
 do echo $size ; 
@@ -8,11 +8,11 @@ do echo $size ;
     rm -fr $CHHC
     mkdir $CHHB
     mkdir $CHHC
-    ls CHH/B/*$size* |sort -R |tail -n5 | sort | while read file; 
+    ls CHH/B/*_$size\.* |sort -R |tail -n3 | sort | while read file; 
     do  
         cp $file $CHHB
     done
-    ls CHH/C/*$size* |sort -R |tail -n5 | sort | while read file; 
+    ls CHH/C/*_$size\.* |sort -R |tail -n3 | sort | while read file; 
     do  
         cp $file $CHHC
     done

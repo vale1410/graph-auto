@@ -14,7 +14,7 @@ do
             then 
                 name=${x:e}-${y:e}
                 echo running $x $y $time piping into $3/$name
-                ./graph-iso-asp.sh $x $y $time > $3/$name
+                ./graph-iso-asp.sh $x $y $time | tee $3/$name
             fi 
         fi 
     done 
