@@ -1,13 +1,20 @@
 package main
 
-import "fmt"
-import "flag"
+import (
+	"flag"
+	"fmt"
+	"sort"
+	"strconv"
+	"strings"
+)
+
 import "os"
-import "strings"
+
 import "bufio"
-import "strconv"
 
 var filename = flag.String("f", "x", "Path to graph file.")
+var di = flag.Bool("di", false, "Degree Invariant.")
+var ddi = flag.Bool("ddi", false, "Degree Depth Invariant.")
 
 type graph struct {
 	pre  string
@@ -25,6 +32,62 @@ type invariant func(int, graph) string
 
 func degInv(node int, g graph) string {
 	return "degree(" + strconv.FormatInt(int64(g.deg[node]), 10) + ")"
+}
+
+func degDepthInv(node int, g graph) (s string) {
+
+	s += "degDepth("
+	done := make([]bool, g.size)
+	done[node] = true
+
+	nodes := []int{node}
+
+	for len(nodes) > 0 {
+
+		degs := make([]int, len(nodes))
+
+		for i, n := range nodes {
+			degs[i] = g.deg[n]
+		}
+
+		sort.Ints(degs)
+		s += format(degs)
+
+		nextNodes := []int{}
+
+		for _, n := range nodes {
+			for _, m := range g.succs(n) {
+				if !done[m] {
+					nextNodes = append(nextNodes, m)
+					done[m] = true
+				}
+			}
+		}
+		nodes = nextNodes
+	}
+
+	s += ")"
+	return
+}
+
+func format(ints []int) (s string) {
+	s += "["
+	for i, n := range ints {
+		if i != 0 {
+			s += ","
+		}
+		s += strconv.FormatInt(int64(n), 10)
+	}
+	return s + "]"
+}
+
+func (g *graph) succs(i int) (s []int) {
+	for j := 0; j < g.size; j++ {
+		if g.adj[i][j] {
+			s = append(s, j)
+		}
+	}
+	return
 }
 
 func main() {
@@ -107,8 +170,14 @@ func main() {
 		}
 
 	}
+	var invariants []invariant
 
-	invariants := []invariant{degInv}
+	if *di {
+		invariants = append(invariants, degInv)
+	}
+	if *ddi {
+		invariants = append(invariants, degDepthInv)
+	}
 
 	g1.printGringo()
 	g2.printGringo()
@@ -150,14 +219,14 @@ func printMappings(g1, g2 graph, invariants []invariant) {
 		g2map[s2] = append(g2map[s2], i)
 	}
 
-	//fmt.Println(g1map)
-	//fmt.Println(g2map)
 	for s, n1s := range g1map {
 		n2s := g2map[s]
 		if len(n1s) != len(n2s) {
-			fmt.Println("a. :- not a. % naive invariant checks show that there is no isomorphism")
+			fmt.Println("a. :- a. % naive invariant checks show that there is no isomorphism")
 		}
-		fmt.Println("% invariant equivalent set:", s, " size:", len(n1s))
+		fmt.Println("% set:", s, " size:", len(n1s))
+		fmt.Println("% graph1:", n1s)
+		fmt.Println("% graph2:", n2s)
 		for _, i := range n1s {
 			for _, j := range n1s {
 				fmt.Printf("mapping(%v%v,%v%v).\n", g1.pre, i, g2.pre, j)
