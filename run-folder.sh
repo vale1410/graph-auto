@@ -1,9 +1,12 @@
 #!/bin/zsh
 
+go build convert.go
+tmp=/tmp/test.lp
+
 for x in $1/*; 
 do 
-    echo $x
-    gringo3 model.lp $x | clasp --stat --configuration=many -t 10 --time-limit 60 > $2/$(basename $x)
+    ./convert -f $x -di > $tmp
+    echo $(basename $x) $(gringo3 model.lp $tmp | clasp --stat --configuration=many --time-limit 60 | grep SATI) 
 done 
 
 
