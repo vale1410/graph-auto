@@ -8,11 +8,11 @@ do echo $size ;
     rm -fr $CHHC
     mkdir $CHHB
     mkdir $CHHC
-    ls CHH/B/*_$size\.* |sort -R |tail -n3 | sort | while read file; 
+    ls CHH/B/*_$size\.* |gsort -R |tail -n2 | gsort | while read file; 
     do  
         cp $file $CHHB
     done
-    ls CHH/C/*_$size\.* |sort -R |tail -n3 | sort | while read file; 
+    ls CHH/C/*_$size\.* |gsort -R |tail -n2 | gsort | while read file; 
     do  
         cp $file $CHHC
     done

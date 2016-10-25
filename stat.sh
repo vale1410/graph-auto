@@ -7,7 +7,7 @@ do
     for x in Results-*-$size/*; 
     do 
         echo $size ';' $(basename $x) ';' $(cat $x | grep 'SATIS' ) ';' \
-        $(cat $x | grep 'Solving: ' | sed 's/Time *: //g' | sed 's/ (.*//g' )  ';' \
+        $(cat $x | grep 'CPU' | sed 's/CPU Time *: //g' | sed 's/ (.*//g' )  ';' \
         $(cat $x | grep 'Solving:' | sed 's/.*g: //g' | sed 's/1st.*//g') ';' \
         $(cat $x  | grep 'Rules' | sed 's/.* : //g' | sed 's/ *(.*//g' ) ';' \
         $(cat $x  | grep 'Conflicts' | sed 's/.* : //g' | sed 's/ *(.*//g' ) ';' 

@@ -15,6 +15,8 @@ import "bufio"
 var filename = flag.String("f", "x", "Path to graph file.")
 var di = flag.Bool("di", false, "Degree Invariant.")
 var ddi = flag.Bool("ddi", false, "Degree Depth Invariant.")
+var dd2 = flag.Bool("dd2", false, "Degree Depth Invariant Version 2.")
+var dot = flag.Bool("dot", false, "Print to std. in .dot format.")
 
 type graph struct {
 	pre  string
@@ -32,6 +34,48 @@ type invariant func(int, graph) string
 
 func degInv(node int, g graph) string {
 	return "degree(" + strconv.FormatInt(int64(g.deg[node]), 10) + ")"
+}
+
+func degDepth2Inv(node int, g graph) (s string) {
+
+	s += "deg2Depth("
+	done := make([]bool, g.size)
+	done[node] = true
+
+	nodes := []int{node}
+
+	for len(nodes) > 0 {
+
+		degs := make([]int, len(nodes))
+
+		for i, n := range nodes {
+			c := 0
+			for _, m := range g.succs(n) {
+				if !done[m] {
+					c++
+				}
+			}
+			degs[i] = c
+		}
+
+		sort.Ints(degs)
+		s += format(degs)
+
+		nextNodes := []int{}
+
+		for _, n := range nodes {
+			for _, m := range g.succs(n) {
+				if !done[m] {
+					nextNodes = append(nextNodes, m)
+					done[m] = true
+				}
+			}
+		}
+		nodes = nextNodes
+	}
+
+	s += ")"
+	return
 }
 
 func degDepthInv(node int, g graph) (s string) {
@@ -178,11 +222,31 @@ func main() {
 	if *ddi {
 		invariants = append(invariants, degDepthInv)
 	}
+	if *dd2 {
+		invariants = append(invariants, degDepth2Inv)
+	}
 
-	g1.printGringo()
-	g2.printGringo()
+	if *dot {
+		fmt.Println("graph test {")
+		printMappings(g1, g2, invariants)
+		g1.printDot()
+		g2.printDot()
+		fmt.Println("}")
+	} else {
+		g1.printGringo()
+		g2.printGringo()
+		encodeMappings(g1, g2, invariants)
+	}
+}
 
-	printMappings(g1, g2, invariants)
+func (g *graph) printDot() {
+	for i := 0; i < g.size; i++ {
+		for j := i + 1; j < g.size; j++ {
+			if g.adj[i][j] {
+				fmt.Printf("%v%v -- %v%v ; \n", g.pre, i, g.pre, j)
+			}
+		}
+	}
 }
 
 func (g *graph) printGringo() {
@@ -207,6 +271,33 @@ func ids(node int, g graph, invariants []invariant) (s string) {
 
 func printMappings(g1, g2 graph, invariants []invariant) {
 
+	mapId := make(map[string]int)
+	nextId := 0
+
+	for i := 0; i < g1.size; i++ {
+
+		s1 := ids(i, g1, invariants)
+		s2 := ids(i, g2, invariants)
+
+		if _, ok := mapId[s1]; !ok {
+			mapId[s1] = nextId
+			nextId++
+		}
+
+		if _, ok := mapId[s2]; !ok {
+			mapId[s2] = nextId
+			nextId++
+		}
+
+		fmt.Printf("%v%v [style=filled,fillcolor=\"/paired12/%v\"]\n", g1.pre, i, mapId[s1]+1)
+		fmt.Printf("%v%v [style=filled,fillcolor=\"/paired12/%v\"]\n", g2.pre, i, mapId[s2]+1)
+
+	}
+
+}
+
+func encodeMappings(g1, g2 graph, invariants []invariant) {
+
 	g1map := make(map[string][]int)
 	g2map := make(map[string][]int)
 
@@ -219,20 +310,28 @@ func printMappings(g1, g2 graph, invariants []invariant) {
 		g2map[s2] = append(g2map[s2], i)
 	}
 
+	conflict := false
+
 	for s, n1s := range g1map {
 		n2s := g2map[s]
 		if len(n1s) != len(n2s) {
+			conflict = true
 			fmt.Println("a. :- a. % naive invariant checks show that there is no isomorphism")
 		}
-		fmt.Println("% set:", s, " size:", len(n1s))
-		fmt.Println("% graph1:", n1s)
-		fmt.Println("% graph2:", n2s)
-		for _, i := range n1s {
-			for _, j := range n1s {
-				fmt.Printf("mapping(%v%v,%v%v).\n", g1.pre, i, g2.pre, j)
+	}
+
+	if !conflict {
+		for s, n1s := range g1map {
+			n2s := g2map[s]
+			fmt.Println("% set:", s, " size:", len(n1s))
+			fmt.Println("% graph1:", n1s)
+			fmt.Println("% graph2:", n2s)
+			for _, i := range n1s {
+				for _, j := range n2s {
+					fmt.Printf("mapping(%v%v,%v%v).\n", g1.pre, i, g2.pre, j)
+				}
 			}
 		}
-
 	}
 
 	return
