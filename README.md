@@ -69,6 +69,8 @@ Tests on CHH instances
 
 Taken from https://sites.google.com/site/giconauto/home/benchmarks
 
+Results with option basic invariant (degree of nodes): -di
+
 size |   pairing  |  result        |   total    |    search  |  clauses   |    conflicts 
 -----|------------|----------------|------------|------------|------------|-------------
 22   |   B25-B49  |  SATISFIABLE   |   0.119s   |    0.00s   |  62788     |    73 
@@ -210,6 +212,90 @@ size |   pairing  |  result        |   total    |    search  |  clauses   |    c
 660  |   B06-B54  |  UNSATISFIABLE |   2710.003s|    0.00s   |  1046039700|    1 
 660  |   B07-B54  |  UNSATISFIABLE |   2700.501s|    0.00s   |  1046039700|    1 
 
+
+Results with option advanced depth invariant: -dd2
+
+size |   pairing  |  result        |   total    |    search  |  clauses   |    conflicts 
+-----|------------|----------------|------------|------------|------------|-------------
+22 | B27-B44 | SATISFIABLE | 0.000s | 0.00s | 5061 | 2 |
+22 | B27-C52 | UNSATISFIABLE | 0.000s | 0.00s | 203 | 1 |
+22 | B27-C61 | UNSATISFIABLE | 0.000s | 0.00s | 203 | 1 |
+22 | B44-C52 | UNSATISFIABLE | 0.000s | 0.00s | 203 | 1 |
+22 | B44-C61 | UNSATISFIABLE | 0.000s | 0.00s | 203 | 1 |
+22 | C52-C61 | SATISFIABLE | 0.000s | 0.00s | 5061 | 2 |
+44 | B52-B80 | SATISFIABLE | 0.010s | 0.00s | 11074 | 20 |
+44 | B52-C03 | UNSATISFIABLE | 0.000s | 0.00s | 439 | 1 |
+44 | B52-C86 | UNSATISFIABLE | 0.000s | 0.00s | 439 | 1 |
+44 | B80-C03 | UNSATISFIABLE | 0.000s | 0.00s | 439 | 1 |
+44 | B80-C86 | UNSATISFIABLE | 0.000s | 0.00s | 439 | 1 |
+44 | C03-C86 | SATISFIABLE | 0.070s | 0.00s | 40978 | 6 |
+88 | B01-B20 | SATISFIABLE | 0.150s | 0.00s | 89066 | 24 |
+88 | B01-C24 | UNSATISFIABLE | 0.000s | 0.00s | 887 | 1 |
+88 | B01-C25 | UNSATISFIABLE | 0.000s | 0.00s | 887 | 1 |
+88 | B20-C24 | UNSATISFIABLE | 0.000s | 0.00s | 887 | 1 |
+88 | B20-C25 | UNSATISFIABLE | 0.000s | 0.00s | 887 | 1 |
+88 | C24-C25 | SATISFIABLE | 0.270s | 0.00s | 151442 | 41 |
+132 | B54-B99 | SATISFIABLE | 0.880s | 0.00s | 409850 | 27 |
+132 | B54-C42 | UNSATISFIABLE | 0.000s | 0.00s | 1447 | 1 |
+132 | B54-C68 | UNSATISFIABLE | 0.000s | 0.00s | 1447 | 1 |
+132 | B99-C42 | UNSATISFIABLE | 0.000s | 0.00s | 1447 | 1 |
+132 | B99-C68 | UNSATISFIABLE | 0.000s | 0.00s | 1447 | 1 |
+132 | C42-C68 | SATISFIABLE | 0.640s | 0.00s | 315674 | 38 |
+198 | B04-B30 | SATISFIABLE | 3.440s | 0.01s | 1413452 | 54 |
+198 | B04-C07 | UNSATISFIABLE | 0.000s | 0.00s | 2221 | 1 |
+198 | B04-C55 | UNSATISFIABLE | 0.000s | 0.00s | 2221 | 1 |
+198 | B30-C07 | UNSATISFIABLE | 0.000s | 0.00s | 2221 | 1 |
+198 | B30-C55 | UNSATISFIABLE | 0.000s | 0.00s | 2221 | 1 |
+198 | C07-C55 | SATISFIABLE | 2.870s | 0.00s | 1129196 | 31 |
+264 | B55-B70 | SATISFIABLE | 7.760s | 0.01s | 2706818 | 93 |
+264 | B55-C19 | UNSATISFIABLE | 0.000s | 0.00s | 3223 | 1 |
+264 | B55-C51 | UNSATISFIABLE | 0.000s | 0.00s | 3223 | 1 |
+264 | B70-C19 | UNSATISFIABLE | 0.000s | 0.00s | 3223 | 1 |
+264 | B70-C51 | UNSATISFIABLE | 0.000s | 0.00s | 3223 | 1 |
+264 | C19-C51 | SATISFIABLE | 8.590s | 0.01s | 2896898 | 67 |
+352 | B19-B71 | SATISFIABLE | 23.860s | 0.04s | 6518146 | 169 |
+352 | B19-C36 | UNSATISFIABLE | 0.000s | 0.00s | 4423 | 1 |
+352 | B19-C84 | UNSATISFIABLE | 0.000s | 0.00s | 4423 | 1 |
+352 | B71-C36 | UNSATISFIABLE | 0.000s | 0.00s | 4423 | 1 |
+352 | B71-C84 | UNSATISFIABLE | 0.000s | 0.00s | 4423 | 1 |
+352 | C36-C84 | SATISFIABLE | 22.170s | 0.03s | 6772162 | 61 |
+440 | B01-B04 | SATISFIABLE | 49.650s | 0.03s | 14538850 | 68 |
+440 | B01-C25 | UNSATISFIABLE | 0.000s | 0.00s | 6007 | 1 |
+440 | B01-C90 | UNSATISFIABLE | 0.000s | 0.00s | 6007 | 1 |
+440 | B04-C25 | UNSATISFIABLE | 0.000s | 0.00s | 6007 | 1 |
+440 | B04-C90 | UNSATISFIABLE | 0.000s | 0.00s | 6007 | 1 |
+440 | C25-C90 | SATISFIABLE | 45.080s | 0.04s | 13584994 | 131 |
+550 | B06-B60 | SATISFIABLE | 99.300s | 0.07s | 28682752 | 79 |
+550 | B06-C31 | UNSATISFIABLE | 0.000s | 0.00s | 7757 | 1 |
+550 | B06-C86 | UNSATISFIABLE | 0.000s | 0.00s | 7757 | 1 |
+550 | B60-C31 | UNSATISFIABLE | 0.000s | 0.00s | 7757 | 1 |
+550 | B60-C86 | UNSATISFIABLE | 0.000s | 0.00s | 7757 | 1 |
+550 | C31-C86 | SATISFIABLE | 97.360s | 0.07s | 27091264 | 157 |
+660 | B52-B64 | SATISFIABLE | 169.870s | 0.11s | 47120042 | 151 |
+660 | B52-C33 | UNSATISFIABLE | 0.000s | 0.00s | 10087 | 1 |
+660 | B52-C94 | UNSATISFIABLE | 0.000s | 0.00s | 10087 | 1 |
+660 | B64-C33 | UNSATISFIABLE | 0.000s | 0.00s | 10087 | 1 |
+660 | B64-C94 | UNSATISFIABLE | 0.000s | 0.00s | 10087 | 1 |
+660 | C33-C94 | SATISFIABLE | 165.490s | 0.11s | 47597834 | 160 |
+792 | B29-B45 | SATISFIABLE | 327.200s | 0.26s | 82095554 | 289 |
+792 | B29-C00 | UNSATISFIABLE | 0.010s | 0.00s | 12535 | 1 |
+792 | B29-C48 | UNSATISFIABLE | 0.010s | 0.00s | 12535 | 1 |
+792 | B45-C00 | UNSATISFIABLE | 0.010s | 0.00s | 12535 | 1 |
+792 | B45-C48 | UNSATISFIABLE | 0.010s | 0.00s | 12535 | 1 |
+792 | C00-C48 | SATISFIABLE | 313.920s | 0.21s | 82669250 | 577 |
+924 | B38-B64 | SATISFIABLE | 554.990s | 0.49s | 141589970 | 226 |
+924 | B38-C33 | UNSATISFIABLE | 0.010s | 0.00s | 15799 | 1 |
+924 | B38-C98 | UNSATISFIABLE | 0.010s | 0.00s | 15799 | 1 |
+924 | B64-C33 | UNSATISFIABLE | 0.010s | 0.00s | 15799 | 1 |
+924 | B64-C98 | UNSATISFIABLE | 0.010s | 0.00s | 15799 | 1 |
+924 | C33-C98 | SATISFIABLE | 618.250s | 0.33s | 138241970 | 196 |
+1078 | B44-B69 | SATISFIABLE | 964.390s | 0.42s | 226255444 | 141 |
+1078 | B44-C26 | UNSATISFIABLE | 0.010s | 0.00s | 19117 | 1 |
+1078 | B44-C98 | UNSATISFIABLE | 0.010s | 0.00s | 19117 | 1 |
+1078 | B69-C26 | UNSATISFIABLE | 0.010s | 0.00s | 19117 | 1 |
+1078 | B69-C98 | UNSATISFIABLE | 0.020s | 0.00s | 19117 | 1 |
+1078 | C26-C98 | SATISFIABLE | 994.120s | 1.83s | 221566516 | 5959 |
+
 Tests on Funkybee Instances. 
 --------
 
@@ -256,3 +342,4 @@ t37 UNSATISFIABLE CPU Time : 0.190s
 t38 UNSATISFIABLE CPU Time : 0.000s
 t39 UNSATISFIABLE CPU Time : 0.000s
 ```
+size | pairing | result | total | search | clauses | conflicts |
